@@ -23,10 +23,9 @@ export default function Login() {
       
       const success = dispatch(AuthActions.signin(emailRef.current.value, passwordRef.current.value))
       if (success.type === AuthConstants.SIGNIN_FAILURE) {
-        setError("No Active Account Found")
-      } else {
-        history.push("/dashboard")
+        return setError("No Active Account Found")
       }
+      history.push("/dashboard")
     } catch {
       setError("Failed to log in")
     }
@@ -41,7 +40,7 @@ export default function Login() {
     >
     <div className="w-100" style={{ maxWidth: "400px" }}>
       <Card>
-        <Card.Body>
+        <Card.Body className="p-4">
           <h2 className="text-center mb-4">Log In</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
@@ -57,9 +56,6 @@ export default function Login() {
               Log In
             </Button>
           </Form>
-          <div className="w-100 text-center mt-3">
-            <Link to="/forgot-password">Forgot Password?</Link>
-          </div>
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">

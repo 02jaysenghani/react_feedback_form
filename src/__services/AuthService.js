@@ -8,14 +8,14 @@ const AuthService = {
     const data = { email: email, password: password }
 
     const userData = LocalStorageService.getData(userDataKey, true);
-
+    let signup_success = true;
     if (userData.length) {
       const duplicate = userData.some(x => x.email === email)
-      if (duplicate) return true
+      if (duplicate) return signup_success = false
     }
     userData.push(data);
     LocalStorageService.saveData(userDataKey, userData, true)
-    return false
+    return signup_success
   },
 
   signin(email, password) {

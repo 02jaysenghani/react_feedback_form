@@ -24,7 +24,23 @@ function signout() {
 	}
 }
 
+function signup(email, password) {
+	const success = AuthService.signup(email, password)
+	let data = {
+		type: AuthConstants.REGISTER_FAILURE,
+		user: {}
+	}
+
+	if (success) {
+		data.type = AuthConstants.REGISTER_SUCCESS;
+		data.user = {email: email};
+	}
+
+	return data
+}
+
 export const AuthActions = {
 	signin,
-	signout
+	signout,
+	signup
 }

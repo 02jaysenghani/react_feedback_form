@@ -17,6 +17,12 @@ const AuthReducers = (state = initialState, action) => {
 		case AuthConstants.SIGN_OUT:
 			return {};
 
+		case AuthConstants.REGISTER_SUCCESS:
+			return {};
+			
+		case AuthConstants.REGISTER_FAILURE:
+			return {};
+
 		default:
 			return state
 	}

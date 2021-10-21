@@ -1,7 +1,9 @@
 import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert, Container } from "react-bootstrap"
-import AuthService  from "../../__services/AuthService"
+import { Alert, Button, Card, Container, Form } from "react-bootstrap"
+import { useDispatch } from "react-redux"
 import { Link, useHistory } from "react-router-dom"
+import { AuthActions } from "../../__redux/__actions/auth"
+import { AuthConstants } from "../../__constant/auth"
 
 export default function Signup() {
   const emailRef = useRef()
@@ -11,6 +13,8 @@ export default function Signup() {
   const [success, setSuccess] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
+  const dispatch = useDispatch()
+  
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -22,8 +26,8 @@ export default function Signup() {
     try {
       setError("")
       setLoading(true)
-      const duplicate = AuthService.signup(emailRef.current.value, passwordRef.current.value)
-      if (duplicate) {
+      const duplicate = dispatch(AuthActions.signup(emailRef.current.value, passwordRef.current.value))
+      if (duplicate.type === AuthConstants.REGISTER_FAILURE) {
         setError("Email id is already created")
         setLoading(false)
         return
