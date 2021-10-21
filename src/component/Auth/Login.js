@@ -1,8 +1,9 @@
-import React, { useRef, useState, useContext  } from "react"
-import { Form, Button, Card, Alert, Container  } from "react-bootstrap"
-import AuthService  from "../../contexts/AuthContext"
+import React, { useRef, useState } from "react"
+import { Alert, Button, Card, Container, Form } from "react-bootstrap"
+import { useDispatch } from "react-redux"
 import { Link, useHistory } from "react-router-dom"
-import AppContext from "../../contexts/AppContext"
+import { AuthActions } from "../../__redux/__actions/auth"
+import { AuthConstants } from "../../__constant/auth"
 
 export default function Login() {
   const emailRef = useRef()
@@ -10,7 +11,8 @@ export default function Login() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
-  const globalContext = useContext(AppContext);
+
+  const dispatch = useDispatch()
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -19,12 +21,11 @@ export default function Login() {
       setError("")
       setLoading(true)
       
-      const success = AuthService.login(emailRef.current.value, passwordRef.current.value)
-      if (success) {
-        globalContext.changeLoggedInUserStatus()
-        history.push("/dashboard")
-      } else {
+      const success = dispatch(AuthActions.signin(emailRef.current.value, passwordRef.current.value))
+      if (success.type === AuthConstants.SIGNIN_FAILURE) {
         setError("No Active Account Found")
+      } else {
+        history.push("/dashboard")
       }
     } catch {
       setError("Failed to log in")

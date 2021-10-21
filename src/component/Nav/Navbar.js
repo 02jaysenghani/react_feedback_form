@@ -1,17 +1,13 @@
-import React, { useContext } from "react"
+import React from "react"
 import { Nav, Navbar } from "react-bootstrap"
+import { useSelector, useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
-import AppContext from "../../contexts/AppContext"
 import logo from "../../images/logo.png"
-import AuthService from "../../contexts/AuthContext"
+import { AuthActions } from "../../__redux/__actions/auth"
 
 export default function NavigationBar() {
-	const globalContext = useContext(AppContext);
-
-	function logout() {
-		AuthService.signout()
-		globalContext.changeLoggedInUserStatus();
-	}
+	const isLoggedIn = useSelector(state => state.authData.loggedIn)
+	const dispatch = useDispatch()
 
 	return (
 		<Navbar bg="light" expand="lg" className="px-5">
@@ -29,10 +25,10 @@ export default function NavigationBar() {
 				>
 				</Nav>
 
-				{globalContext.isUserLoggedIn ?
+				{isLoggedIn ?
 					<Nav>
 						<Nav.Link as={Link} to="/feedbacks">Feedbacks</Nav.Link>
-						<Nav.Link onClick={logout.bind(this)} as={Link} to="/">Logout</Nav.Link>
+						<Nav.Link onClick={() => dispatch(AuthActions.signout())} as={Link} to="/">Logout</Nav.Link>
 					</Nav>
 					:
 					<Nav>

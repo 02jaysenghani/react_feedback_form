@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react"
 import { Alert, Button, Card, Container, Form } from "react-bootstrap"
-import FeedbackService from "../../contexts/FeedbackContext"
-import LocalStorageService from "../../contexts/LocalStorageContext"
+import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
+import FeedbackService from "../../__services/FeedbackService"
 
 export default function FeedbackForm() {
 	const emailRef = useRef()
@@ -12,7 +12,7 @@ export default function FeedbackForm() {
 	const [success, setSuccess] = useState("")
 	const [loading, setLoading] = useState(false)
 
-	const userEmail = LocalStorageService.getData('userEmail')
+	const userEmail = useSelector(state => state.authData.user.email)
 
 	function handleSubmit(e) {
 		e.preventDefault()

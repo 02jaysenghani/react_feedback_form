@@ -1,11 +1,12 @@
 import React from "react"
-import { Container, Table, Button } from "react-bootstrap"
-import FeedbackService from "../../contexts/FeedbackContext"
+import { Button, Container, Table } from "react-bootstrap"
+import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
-import LocalStorageService from "../../contexts/LocalStorageContext"
+import FeedbackService from "../../__services/FeedbackService"
+
 
 export default function FeedbackList() {
-	const userEmail = LocalStorageService.getData('userEmail')
+	const userEmail = useSelector(state => state.authData.user.email)
 
 	let initialFeedbackData = FeedbackService.getFeedbackData().filter(x => x.email === userEmail)
 	const [feedbackData, setList] = React.useState(initialFeedbackData);

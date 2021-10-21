@@ -1,4 +1,4 @@
-import LocalStorageService from './LocalStorageContext'
+import LocalStorageService from './LocalStorageService'
 
 const feedbackDataKey = 'feedbackData'
 

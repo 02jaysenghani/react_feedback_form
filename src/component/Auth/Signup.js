@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert, Container } from "react-bootstrap"
-import AuthService  from "../../contexts/AuthContext"
+import AuthService  from "../../__services/AuthService"
 import { Link, useHistory } from "react-router-dom"
 
 export default function Signup() {
@@ -32,7 +32,7 @@ export default function Signup() {
 
       setTimeout(() => {
         history.push("/login")
-			}, 2000);
+			}, 1000);
     } catch {
       setError("Failed to create an account")
     }

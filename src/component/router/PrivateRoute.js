@@ -1,14 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
-import AppContext from "../../contexts/AppContext";
 
 function PrivateRoute({ component: Component, ...rest }) {
-  const globalContext = useContext(AppContext);
+  const isLoggedIn = useSelector(state => state.authData.loggedIn)
+  
   return (
     <Route
       {...rest}
       render={props => {
-        return globalContext.isUserLoggedIn ? <Component {...props} /> : <Redirect to="/login" />
+        return isLoggedIn ? <Component {...props} /> : <Redirect to="/login" />
       }}
     ></Route>
   )
